@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "biome lint --apply ./src/**/*",
+    "lint": "next lint --dir src",
+    "lint:fix": "next lint --dir src --fix",
     "format": "biome format ./src/**/* --write",
     "check": "biome check --apply ./src/**/*"
   },
