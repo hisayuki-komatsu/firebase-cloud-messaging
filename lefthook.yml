@@ -1,12 +1,14 @@
-pre-push:
-  commands:
-    packages-audit:
-      tags: frontend security
-      run: pnpm audit
-
 pre-commit:
   parallel: true
-  commands:
-    biome:
-      glob: "src/**/*.{js,ts,jsx,tsx}"
-      run: npx @biomejs/biome check --write {staged_files}
+  jobs:
+    - name: next lint
+      run: pnpm next lint --fix --file {staged_files}
+      glob: "*.{js,ts,jsx,tsx}"
+      stage_fixed: true
+    - name: biome format
+      run: pnpm biome format --write {staged_files} --no-errors-on-unmatched
+      glob: "*.{js,ts,jsx,tsx,json}"
+      stage_fixed: true
+    - name: tsc
+      run: pnpm tsc
+      glob: "*.{js,ts,jsx,tsx}"
