@@ -13,21 +13,21 @@ export const useFirebaseCloudMessage = (): void => {
 
   navigator.serviceWorker
     .register('/m/firebase-messaging-sw.js') // カスタムパスを指定
-    .then((registration) => {
+    .then(registration => {
       return getToken(messaging, {
         vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
         serviceWorkerRegistration: registration, // 登録オブジェクトを渡す
       });
     })
-    .then((currentToken) => {
+    .then(currentToken => {
       console.log('FCM トークン:', currentToken);
       // トークンをサーバーに送る、など
     })
-    .catch((err) => {
+    .catch(err => {
       console.error('FCM トークン取得エラー:', err);
     });
 
-  onMessage(messaging, (payload) => {
+  onMessage(messaging, payload => {
     console.log('Message received. ', payload);
   });
 };
